@@ -8,7 +8,7 @@ const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(`Server is running at port ${port}`);
 });
-app.use(cors({ origin: "http://20.244.44.49/" }));
+app.use(cors({ origin: "*"}));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
