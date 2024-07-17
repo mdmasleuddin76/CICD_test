@@ -21,6 +21,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /path/to/your/project
+            cd ./testing/CICD_test
             git pull
-            sudo docker-compose -f docker.yml up -d
+            sudo docker-compose -f docker.yml up -d --build frontend
