@@ -5,7 +5,7 @@ export default function Home() {
   const [data, setData] = useState({});
   const [input,setinput]=useState("");
   const fetchData = async () => {
-    const response = await axios.post("http://backend:4000",{test:input});
+    const response = await axios.post("http://20.244.44.49:4000",{test:input});
     setData(response.data);
     console.log(response.data);
   };
