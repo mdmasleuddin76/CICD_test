@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self_hosted
     
     steps:
     - name: Run deployment commands via SSH
@@ -13,11 +13,7 @@ jobs:
         SSH_HOSTNAME: ${{secrets.USERNAME}}
         SSH_IP: ${{secrets.HOST}}
       run: |
-        echo "$SSH_PRIVATE_KEY" > private_key
-        chmod 600 private_key
-        mkdir -p ~/.ssh
-        ssh-keyscan -H "$SSH_IP" >> ~/.ssh/known_hosts
-        ssh -i private_key "$SSH_HOSTNAME"@"$SSH_IP"<< 'EOF'
+       EOF
           cd ./testing/CICD_test/
           git pull origin main
           sudo docker-compose -f ./docker.yml up -d --build
