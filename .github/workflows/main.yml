@@ -16,6 +16,7 @@ jobs:
       run: |
         echo "$SSH_PRIVATE_KEY" > private_key
         chmod 600 private_key
+        mkdir -p ~/.ssh
         ssh-keyscan -H 20.244.44.49 >> ~/.ssh/known_hosts
         ssh -i private_key masleuddin@20.244.44.49 << 'EOF'
           git pull origin main
