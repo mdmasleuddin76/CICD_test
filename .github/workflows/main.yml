@@ -1,26 +1,23 @@
-name: Deploy to Server
+name: CI/CD Pipeline
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on: [push]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Run SSH commands
-        uses: appleboy/ssh-action@v0.1.5
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            cd ./testing/CICD_test
-            git pull
-            sudo docker-compose -f docker.yml up -d --build frontend
+    - name: Run deployment commands via SSH
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      run: |
+        echo "$SSH_PRIVATE_KEY" > private_key
+        chmod 600 private_key
+        mkdir -p ~/.ssh
+        ssh-keyscan -H 20.244.44.49 >> ~/.ssh/known_hosts
+        ssh -i private_key masleuddin@20.244.44.49 << 'EOF'
+          cd ./testing/CICD_test/
+          git pull origin main
+          sudo docker-compose -f ./docker.yml up -d
+        EOF
+      shell: bash
