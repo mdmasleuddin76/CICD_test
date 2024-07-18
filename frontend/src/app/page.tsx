@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className=" w-[70%] m-auto text-center">
       <h1>Home</h1>
-      <p>Welcome to Home Page 2 updated Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nemo optio provident natus vitae enim quo accusamus esse pariatur est? </p>
+      <p>Welcome to Home Page </p>
       <p> Some data that has been feteched from backend are following</p>
       <input type="text" onChange={(e)=>setinput(e.target.value)} className=" border border-red-600 p-2 m-4" />
       <button className=" border border-sky-300 bg-slate-50 m-2 p-3 rounded-md" onClick={()=>fetchData()}>Fetch Data</button>
