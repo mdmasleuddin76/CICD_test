@@ -13,6 +13,7 @@ jobs:
         SSH_HOSTNAME: ${{secrets.USERNAME}}
         SSH_IP: ${{secrets.HOST}}
       run: |
+          cd ~
           cd ./testing/CICD_test/
           git pull origin main
           sudo docker-compose -f ./docker.yml up -d --build
