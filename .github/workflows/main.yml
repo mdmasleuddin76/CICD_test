@@ -19,10 +19,22 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > private_key
           chmod 600 private_key
           mkdir -p ~/.ssh
+
+          # Debug output
+          echo "Running ssh-keyscan"
           ssh-keyscan -H "$SSH_IP" >> ~/.ssh/known_hosts
-          ssh -i private_key "$SSH_HOSTNAME"@"$SSH_IP"<< 'EOF'
-            cd ./testing/CICD_test/
-            git pull origin main
-            sudo docker-compose -f ./docker.yml up -d --build
-          'EOF'
+          echo "ssh-keyscan completed"
+
+          # Debug output
+          echo "Connecting to remote server"
+          ssh -i private_key "$SSH_HOSTNAME"@"$SSH_IP" << 'EOF'
+            echo "Connected to remote server"
+            cd ./testing/CICD_test/ || { echo "cd failed"; exit 1; }
+            git pull origin main || { echo "git pull failed"; exit 1; }
+            sudo docker-compose -f ./docker.yml up -d --build || { echo "docker-compose failed"; exit 1; }
+          EOF
+
+          # Debug output
+          echo "Remote commands executed"
+
         shell: bash
