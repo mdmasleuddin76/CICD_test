@@ -1,6 +1,6 @@
 name: CI/CD Pipeline
 
-on: 
+on:
   push:
     branches:
       - main
@@ -8,21 +8,21 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Run deployment commands via SSH
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        SSH_HOSTNAME: ${{secrets.USERNAME}}
-        SSH_IP: ${{secrets.HOST}}
-      run: |
-        echo "$SSH_PRIVATE_KEY" > private_key
-        chmod 600 private_key
-        mkdir -p ~/.ssh
-        ssh-keyscan -H "$SSH_IP" >> ~/.ssh/known_hosts
-        ssh -i private_key "$SSH_HOSTNAME"@"$SSH_IP"<< 'EOF'
-          cd ./testing/CICD_test/
-          git pull origin main
-          sudo docker-compose -f ./docker.yml up -d --build
-          EOF
-      shell: bash
+      - name: Run deployment commands via SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOSTNAME: ${{secrets.USERNAME}}
+          SSH_IP: ${{secrets.HOST}}
+        run: |
+            echo "$SSH_PRIVATE_KEY" > private_key
+            chmod 600 private_key
+            mkdir -p ~/.ssh
+            ssh-keyscan -H "$SSH_IP" >> ~/.ssh/known_hosts
+            ssh -i private_key "$SSH_HOSTNAME"@"$SSH_IP"<< 'EOF'
+            cd ./testing/CICD_test/
+            git pull origin main
+            sudo docker-compose -f ./docker.yml up -d --build
+            'EOF'
+        shell: bash
