@@ -20,9 +20,9 @@ jobs:
         chmod 600 private_key
         mkdir -p ~/.ssh
         ssh-keyscan -H "$SSH_IP" >> ~/.ssh/known_hosts
-        ssh -i private_key "$SSH_HOSTNAME"@"$SSH_IP"<<'EOF'
+        ssh -i private_key "$SSH_HOSTNAME"@"$SSH_IP"<< 'EOF'
           cd ./testing/CICD_test/
           git pull origin main
           sudo docker-compose -f ./docker.yml up -d --build
-        EOF
+          EOF
       shell: bash
