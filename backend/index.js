@@ -19,7 +19,7 @@ async function run(test) {
   return prompt;
 }
 
-app.post("/", async (req, res) => {
+app.get("/", async (req, res) => {
   const {test } = req.body;
   const data = await run(test);
   res.json({ name: "Hacked", data: data });
