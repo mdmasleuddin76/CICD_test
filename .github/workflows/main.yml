@@ -20,6 +20,7 @@ jobs:
           chmod 600 private_key
           mkdir -p ~/.ssh
 
+
           # Debug output
           echo "Running ssh-keyscan"
           ssh-keyscan -H "$SSH_IP" >> ~/.ssh/known_hosts
